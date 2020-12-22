@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { lastErrorHandler, notFoundHandler } from './utils/errorHandlers';
 import { createConnection } from 'typeorm';
+import { apiRoutes } from './routes/api';
 
 const main = async () => {
   await createConnection();
@@ -19,6 +20,8 @@ const main = async () => {
   app.get('/', (_, res) => {
     return res.json({ message: 'hello world' });
   });
+
+  app.use('/api', apiRoutes);
 
   app.use(notFoundHandler);
   app.use(lastErrorHandler);

@@ -19,6 +19,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const errorHandlers_1 = require("./utils/errorHandlers");
 const typeorm_1 = require("typeorm");
+const api_1 = require("./routes/api");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     yield typeorm_1.createConnection();
     const app = express_1.default();
@@ -29,6 +30,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.get('/', (_, res) => {
         return res.json({ message: 'hello world' });
     });
+    app.use('/api', api_1.apiRoutes);
     app.use(errorHandlers_1.notFoundHandler);
     app.use(errorHandlers_1.lastErrorHandler);
     const server = app.listen(process.env.PORT, () => {
