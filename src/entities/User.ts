@@ -1,4 +1,11 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  BaseEntity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+} from 'typeorm';
+import { Ride } from './Ride';
 
 @Entity()
 export class User extends BaseEntity {
@@ -10,4 +17,7 @@ export class User extends BaseEntity {
 
   @Column({ type: 'varchar', length: 50 })
   last_name: string;
+
+  @OneToMany(() => Ride, (ride) => ride.user_id)
+  rides: Ride[];
 }

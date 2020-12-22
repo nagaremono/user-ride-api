@@ -9,29 +9,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Ride = void 0;
 const typeorm_1 = require("typeorm");
-const Ride_1 = require("./Ride");
-let User = class User extends typeorm_1.BaseEntity {
+const User_1 = require("./User");
+let Ride = class Ride extends typeorm_1.BaseEntity {
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
+], Ride.prototype, "id", void 0);
 __decorate([
-    typeorm_1.Column({ type: 'varchar', length: 50, nullable: false }),
+    typeorm_1.Column({ type: 'varchar', length: 100, nullable: false }),
     __metadata("design:type", String)
-], User.prototype, "first_name", void 0);
+], Ride.prototype, "from_city_name", void 0);
 __decorate([
-    typeorm_1.Column({ type: 'varchar', length: 50 }),
+    typeorm_1.Column({ type: 'varchar', length: 100, nullable: false }),
     __metadata("design:type", String)
-], User.prototype, "last_name", void 0);
+], Ride.prototype, "to_city_name", void 0);
 __decorate([
-    typeorm_1.OneToMany(() => Ride_1.Ride, (ride) => ride.user_id),
-    __metadata("design:type", Array)
-], User.prototype, "rides", void 0);
-User = __decorate([
+    typeorm_1.ManyToOne(() => User_1.User, (user) => user.rides),
+    typeorm_1.JoinColumn({ name: 'user_id' }),
+    __metadata("design:type", User_1.User)
+], Ride.prototype, "user_id", void 0);
+Ride = __decorate([
     typeorm_1.Entity()
-], User);
-exports.User = User;
-//# sourceMappingURL=User.js.map
+], Ride);
+exports.Ride = Ride;
+//# sourceMappingURL=Ride.js.map
