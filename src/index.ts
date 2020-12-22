@@ -5,17 +5,9 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { lastErrorHandler, notFoundHandler } from './utils/errorHandlers';
 import { createConnection } from 'typeorm';
-import { User } from './entities/User';
-import { Ride } from './entities/Ride';
 
 const main = async () => {
-  await createConnection({
-    type: 'postgres',
-    url: process.env.DATABASE_URL,
-    entities: [User, Ride],
-    logging: true,
-    synchronize: true,
-  });
+  await createConnection();
 
   const app = express();
 

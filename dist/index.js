@@ -19,16 +19,8 @@ const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const errorHandlers_1 = require("./utils/errorHandlers");
 const typeorm_1 = require("typeorm");
-const User_1 = require("./entities/User");
-const Ride_1 = require("./entities/Ride");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield typeorm_1.createConnection({
-        type: 'postgres',
-        url: process.env.DATABASE_URL,
-        entities: [User_1.User, Ride_1.Ride],
-        logging: true,
-        synchronize: true,
-    });
+    yield typeorm_1.createConnection();
     const app = express_1.default();
     app.use(cors_1.default());
     app.use(morgan_1.default('dev'));
