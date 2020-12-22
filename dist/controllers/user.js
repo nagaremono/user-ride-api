@@ -15,11 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.userController = void 0;
 const express_1 = __importDefault(require("express"));
 const User_1 = require("../entities/User");
+const typeorm_1 = require("typeorm");
 const router = express_1.default.Router();
 exports.userController = router;
-router.get('/', (_, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { relation } = req.query;
     try {
-        const users = yield User_1.User.find();
+        const query = typeorm_1.getRepository(User_1.User).createQueryBuilder('user');
+        if (relation === 'ride') {
+            query.leftJoinAndSelect('user.rides', 'ride').orderBy('user.id');
+        }
+        const users = yield query.getMany();
         return res.json(users);
     }
     catch (error) {

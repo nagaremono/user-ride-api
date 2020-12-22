@@ -1,11 +1,21 @@
 import express from 'express';
 import { User } from '../entities/User';
+import { getRepository } from 'typeorm';
 
 const router = express.Router();
 
-router.get('/', async (_, res, next) => {
+router.get('/', async (req, res, next) => {
+  const { relation } = req.query;
+
   try {
-    const users = await User.find();
+    const query = getRepository(User).createQueryBuilder('user');
+
+    if (relation === 'ride') {
+      query.leftJoinAndSelect('user.rides', 'ride').orderBy('user.id');
+    }
+
+    const users = await query.getMany();
+
     return res.json(users);
   } catch (error) {
     return next(error);
