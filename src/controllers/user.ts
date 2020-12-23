@@ -10,7 +10,7 @@ router.get('/', async (req, res, next) => {
   try {
     const query = getRepository(User).createQueryBuilder('user');
 
-    if (relation === 'ride') {
+    if (relation === 'rides') {
       query.leftJoinAndSelect('user.rides', 'ride').orderBy('user.id');
     }
 

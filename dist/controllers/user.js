@@ -22,7 +22,7 @@ router.get('/', (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     const { relation } = req.query;
     try {
         const query = typeorm_1.getRepository(User_1.User).createQueryBuilder('user');
-        if (relation === 'ride') {
+        if (relation === 'rides') {
             query.leftJoinAndSelect('user.rides', 'ride').orderBy('user.id');
         }
         const users = yield query.getMany();
